@@ -34,40 +34,40 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := Led_Animation
+BUILD_ARTIFACT_NAME := LAB_1
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-Led_Animation.elf \
+LAB_1.elf \
 
 MAP_FILES += \
-Led_Animation.map \
+LAB_1.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-Led_Animation.list \
+LAB_1.list \
 
 OBJCOPY_HEX += \
-Led_Animation.hex \
+LAB_1.hex \
 
 OBJCOPY_BIN += \
-Led_Animation.bin \
+LAB_1.bin \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: Led_Animation.elf secondary-outputs
+main-build: LAB_1.elf secondary-outputs
 
 # Tool invocations
-Led_Animation.elf Led_Animation.map: $(OBJS) $(USER_OBJS) D:\HK251\ViXuLy\Lab\Code_STM32\Lab1\STM32F103C6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Led_Animation.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\HK251\ViXuLy\Lab\Code_STM32\Lab1\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Led_Animation.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+LAB_1.elf LAB_1.map: $(OBJS) $(USER_OBJS) D:\HK251\ViXuLy\Lab\Code_STM32\Lab1\STM32F103C6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "LAB_1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\HK251\ViXuLy\Lab\Code_STM32\Lab1\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB_1.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -76,24 +76,24 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Led_Animation.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Led_Animation.list"
+LAB_1.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "LAB_1.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Led_Animation.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "Led_Animation.hex"
+LAB_1.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "LAB_1.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Led_Animation.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "Led_Animation.bin"
+LAB_1.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "LAB_1.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) Led_Animation.bin Led_Animation.elf Led_Animation.hex Led_Animation.list Led_Animation.map default.size.stdout
+	-$(RM) LAB_1.bin LAB_1.elf LAB_1.hex LAB_1.list LAB_1.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
