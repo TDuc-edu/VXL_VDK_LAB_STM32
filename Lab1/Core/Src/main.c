@@ -43,7 +43,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+int hour = 23;
+int minute = 24;
+int second = 50;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -95,10 +97,34 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  for(int counter = 1; counter <=12; counter ++){
-	  		  display_led(counter);
-	  		  HAL_Delay(1000);
-	  	  }
+	  clearAllClock();
+
+	  // tính vị trí cho led giờ phút giây
+	  int sec_pos = second/5; // 60 giay cho 12 vi tri, 5s/led
+	  int min_pos = minute/5; // tuong tu cho phut
+	  int hour_pos = hour%12;
+
+
+	  //bat 3 led tuong ung
+	  setNumberOnClock(sec_pos);
+	  setNumberOnClock(min_pos);
+	  setNumberOnClock(hour_pos);
+
+	  HAL_Delay(1000);
+
+	  // Cập nhật thời gian
+	      second++;
+	      if (second >= 60) {
+	          second = 0;
+	          minute++;
+	      }
+	      if (minute >= 60) {
+	          minute = 0;
+	          hour++;
+	      }
+	      if (hour >= 24) {
+	          hour = 0;
+	      }
 
 
     /* USER CODE END WHILE */
