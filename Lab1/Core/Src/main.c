@@ -94,7 +94,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //1,3 red
+	  	  	  //1,3 red
 	  	  	  //2 4 green
 	  	  	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, 0);
 	  	  	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, 1);
