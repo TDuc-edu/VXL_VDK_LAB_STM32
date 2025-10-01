@@ -193,3 +193,57 @@ void display_led(int num){
 
 	}
 }
+
+void clearAllClock(){
+	HAL_GPIO_WritePin(GPIOA, LED1_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED2_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED3_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED4_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED5_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED6_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED7_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED8_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED9_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED10_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED11_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, LED12_Pin, 1);
+}
+
+
+void setNumberOnClock(int num){
+	switch (num){
+	case 0: HAL_GPIO_WritePin(GPIOA, LED1_Pin, 0); break;
+	case 1: HAL_GPIO_WritePin(GPIOA, LED2_Pin, 0); break;
+	case 2: HAL_GPIO_WritePin(GPIOA, LED3_Pin, 0); break;
+	case 3: HAL_GPIO_WritePin(GPIOA, LED4_Pin, 0); break;
+	case 4: HAL_GPIO_WritePin(GPIOA, LED5_Pin, 0); break;
+	case 5: HAL_GPIO_WritePin(GPIOA, LED6_Pin, 0); break;
+	case 6: HAL_GPIO_WritePin(GPIOA, LED7_Pin, 0); break;
+	case 7: HAL_GPIO_WritePin(GPIOA, LED8_Pin, 0); break;
+	case 8: HAL_GPIO_WritePin(GPIOA, LED9_Pin, 0); break;
+	case 9: HAL_GPIO_WritePin(GPIOA, LED10_Pin, 0);  break;
+	case 10: HAL_GPIO_WritePin(GPIOA, LED11_Pin, 0); break;
+	case 11: HAL_GPIO_WritePin(GPIOA, LED12_Pin, 0); break;
+	default:	break;
+
+	}
+}
+
+void clearNumberOnClock(int num){
+	switch (num){
+	case 0: HAL_GPIO_WritePin(GPIOA, LED1_Pin, 1); break;
+	case 1: HAL_GPIO_WritePin(GPIOA, LED2_Pin, 1); break;
+	case 2: HAL_GPIO_WritePin(GPIOA, LED3_Pin, 1); break;
+	case 3: HAL_GPIO_WritePin(GPIOA, LED4_Pin, 1); break;
+	case 4: HAL_GPIO_WritePin(GPIOA, LED5_Pin, 1); break;
+	case 5: HAL_GPIO_WritePin(GPIOA, LED6_Pin, 1); break;
+	case 6: HAL_GPIO_WritePin(GPIOA, LED7_Pin, 1); break;
+	case 7: HAL_GPIO_WritePin(GPIOA, LED8_Pin, 1); break;
+	case 8: HAL_GPIO_WritePin(GPIOA, LED9_Pin, 1); break;
+	case 9: HAL_GPIO_WritePin(GPIOA, LED10_Pin, 1);  break;
+	case 10: HAL_GPIO_WritePin(GPIOA, LED11_Pin, 1); break;
+	case 11: HAL_GPIO_WritePin(GPIOA, LED12_Pin, 1); break;
+	default:	break;
+
+	}
+}

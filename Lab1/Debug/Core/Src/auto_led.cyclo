@@ -1,1 +1,4 @@
 ../Core/Src/auto_led.c:13:6:display_led	13
+../Core/Src/auto_led.c:197:6:clearAllClock	1
+../Core/Src/auto_led.c:213:6:setNumberOnClock	13
+../Core/Src/auto_led.c:232:6:clearNumberOnClock	13
