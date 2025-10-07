@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "led_7seg.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -199,16 +199,30 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|EN0_Pin|EN1_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : LED_RED_Pin */
-  GPIO_InitStruct.Pin = LED_RED_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, LED7_SEG0_Pin|LED7_SEG1_Pin|LED7_SEG2_Pin|LED7_SEG3_Pin
+                          |LED7_SEG4_Pin|LED7_SEG5_Pin|LED7_SEG6_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : LED_RED_Pin EN0_Pin EN1_Pin */
+  GPIO_InitStruct.Pin = LED_RED_Pin|EN0_Pin|EN1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LED_RED_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LED7_SEG0_Pin LED7_SEG1_Pin LED7_SEG2_Pin LED7_SEG3_Pin
+                           LED7_SEG4_Pin LED7_SEG5_Pin LED7_SEG6_Pin */
+  GPIO_InitStruct.Pin = LED7_SEG0_Pin|LED7_SEG1_Pin|LED7_SEG2_Pin|LED7_SEG3_Pin
+                          |LED7_SEG4_Pin|LED7_SEG5_Pin|LED7_SEG6_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
@@ -216,13 +230,24 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int counter = 100;
-void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
+int led_index = 0;
+int counter = 50;
+void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 {
 	counter--;
 	if(counter <= 0){
-		counter = 100;
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin)
+		counter = 50;
+		HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin, 1);
+
+		if (led_index == 0){
+			display7SEG(1);
+			HAL_GPIO_WritePin(GPIOA, EN0_Pin, 0);
+		} else{
+			display7SEG(2);
+			HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
+		}
+
+		led_index = (led_index + 1) %2;
 	}
 }
 /* USER CODE END 4 */
