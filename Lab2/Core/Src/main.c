@@ -26,6 +26,10 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+typedef enum {
+	DISPLAY_DIGIT_1,
+	DISPLAY_DIGIT_2,
+} display_state_t;
 
 /* USER CODE END PTD */
 
@@ -230,24 +234,35 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int led_index = 0;
-int counter = 50;
+static display_state_t display_state = DISPLAY_DIGIT_1;
+int counter = 0;
+
 void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 {
-	counter--;
-	if(counter <= 0){
-		counter = 50;
-		HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin, 1);
+	if (htim != &htim2) return;
 
-		if (led_index == 0){
+	counter++;
+	if(counter >= 50){
+		counter = 0;
+
+		// tắt tất cả display
+		HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin , 1);
+
+		switch(display_state){
+
+		case DISPLAY_DIGIT_1:
 			display7SEG(1);
 			HAL_GPIO_WritePin(GPIOA, EN0_Pin, 0);
-		} else{
+			display_state = DISPLAY_DIGIT_2;
+			break;
+
+		case DISPLAY_DIGIT_2:
 			display7SEG(2);
 			HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
-		}
+			display_state = DISPLAY_DIGIT_1;
+			break;
 
-		led_index = (led_index + 1) %2;
+		}
 	}
 }
 /* USER CODE END 4 */
