@@ -8,6 +8,9 @@
 #include "main.h"
 #include "led_7seg.h"
 
+
+
+
 void display7SEG(int num){
 	switch (num){
 	case 0:
@@ -105,3 +108,8 @@ void display7SEG(int num){
 		break;
 	}
 }
+
+
+
+
+

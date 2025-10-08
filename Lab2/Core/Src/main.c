@@ -240,55 +240,63 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-static display_state_t display_state = DISPLAY_DIGIT_1;
+
+const int MAX_LED = 4;
+int index_led = 0;
+int led_buffer[4] = {1,2,3,4};
 int counter = 0;
+
+void update7SEG (int index) {
+
+	// tắt tất cả các led
+	switch  (index) {
+
+
+//	HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin, 1);
+	case 0:
+		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN2_Pin | EN3_Pin, 1);
+		display7SEG(led_buffer[0]);
+		HAL_GPIO_WritePin(GPIOA, EN0_Pin, 0);
+		break ;
+
+	case 1:
+		HAL_GPIO_WritePin(GPIOA,  EN0_Pin | EN2_Pin | EN3_Pin, 1);
+		display7SEG(led_buffer[1]);
+		HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
+		break ;
+
+	case 2:
+		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN0_Pin | EN3_Pin, 1);
+		display7SEG(led_buffer[2]);
+		HAL_GPIO_WritePin(GPIOA, EN2_Pin, 0);
+		break ;
+
+	case 3:
+		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN2_Pin | EN0_Pin, 1);
+		display7SEG(led_buffer[3]);
+		HAL_GPIO_WritePin(GPIOA, EN3_Pin, 0);
+		break ;
+
+	default:
+		break;
+
+	}
+}
 
 void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 {
 	if (htim != &htim2) return;
 
-	counter++;
-	if(counter >= 50){
-		counter = 0;
+		counter++;
+		if(counter >= 50){
+			counter = 0;
 
-		// tắt tất cả display
-		HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin | DOT_Pin , 1);
-
-		switch(display_state){
-
-		case DISPLAY_DIGIT_1:
-			display7SEG(1);
-			HAL_GPIO_WritePin(GPIOA, EN0_Pin, 0);
-			display_state = DISPLAY_DIGIT_2;
-			break;
-
-		case DISPLAY_DIGIT_2:
-			display7SEG(2);
-			HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
-			display_state = DiSPLAY_DOT;
-			break;
-
-		case DiSPLAY_DOT:
-			HAL_GPIO_WritePin(GPIOA, DOT_Pin, 0);
-			display_state = DISPLAY_DIGIT_3;
-			break;
-
-		case DISPLAY_DIGIT_3:
-			display7SEG(3);
-			HAL_GPIO_WritePin(GPIOA, EN2_Pin, 0);
-			display_state = DISPLAY_DIGIT_0;
-			break;
-
-		case DISPLAY_DIGIT_0:
-			display7SEG(0);
-			HAL_GPIO_WritePin(GPIOA, EN3_Pin, 0);
-			display_state = DISPLAY_DIGIT_1;
-			break;
-
+	update7SEG(index_led++);
+	  if (index_led >= MAX_LED) index_led = 0;
 
 		}
-	}
 }
+
 /* USER CODE END 4 */
 
 /**
