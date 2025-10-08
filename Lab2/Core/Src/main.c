@@ -29,6 +29,9 @@
 typedef enum {
 	DISPLAY_DIGIT_1,
 	DISPLAY_DIGIT_2,
+	DISPLAY_DIGIT_3,
+	DISPLAY_DIGIT_0,
+	DiSPLAY_DOT
 } display_state_t;
 
 /* USER CODE END PTD */
@@ -206,14 +209,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|EN0_Pin|EN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
+                          |EN2_Pin|EN3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LED7_SEG0_Pin|LED7_SEG1_Pin|LED7_SEG2_Pin|LED7_SEG3_Pin
                           |LED7_SEG4_Pin|LED7_SEG5_Pin|LED7_SEG6_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : LED_RED_Pin EN0_Pin EN1_Pin */
-  GPIO_InitStruct.Pin = LED_RED_Pin|EN0_Pin|EN1_Pin;
+  /*Configure GPIO pins : DOT_Pin LED_RED_Pin EN0_Pin EN1_Pin
+                           EN2_Pin EN3_Pin */
+  GPIO_InitStruct.Pin = DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
+                          |EN2_Pin|EN3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -246,7 +252,7 @@ void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 		counter = 0;
 
 		// tắt tất cả display
-		HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin , 1);
+		HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin | DOT_Pin , 1);
 
 		switch(display_state){
 
@@ -259,8 +265,26 @@ void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 		case DISPLAY_DIGIT_2:
 			display7SEG(2);
 			HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
+			display_state = DiSPLAY_DOT;
+			break;
+
+		case DiSPLAY_DOT:
+			HAL_GPIO_WritePin(GPIOA, DOT_Pin, 0);
+			display_state = DISPLAY_DIGIT_3;
+			break;
+
+		case DISPLAY_DIGIT_3:
+			display7SEG(3);
+			HAL_GPIO_WritePin(GPIOA, EN2_Pin, 0);
+			display_state = DISPLAY_DIGIT_0;
+			break;
+
+		case DISPLAY_DIGIT_0:
+			display7SEG(0);
+			HAL_GPIO_WritePin(GPIOA, EN3_Pin, 0);
 			display_state = DISPLAY_DIGIT_1;
 			break;
+
 
 		}
 	}
