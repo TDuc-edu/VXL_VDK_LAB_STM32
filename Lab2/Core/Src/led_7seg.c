@@ -114,10 +114,7 @@ int led_buffer[4] = {1,2,3,4};
 
 void update7SEG (int index) {
 
-	// tắt tất cả các led
 	switch  (index) {
-
-
 	case 0:
 		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN2_Pin | EN3_Pin, 1);
 		display7SEG(led_buffer[0]);
