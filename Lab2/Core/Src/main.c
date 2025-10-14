@@ -244,6 +244,7 @@ static void MX_GPIO_Init(void)
 const int MAX_LED = 4;
 int index_led = 0;
 int counter = 0;
+int dot_counter = 0;
 
 
 void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
@@ -251,12 +252,23 @@ void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 	if (htim != &htim2) return;
 
 		counter++;
-		if(counter >= 50){
+		if(counter >= 100){  // 100 x 10ms = 1000ms = 1s
 			counter = 0;
 
-			update7SEG(index_led++);
+			index_led++;
 			if (index_led >= MAX_LED) index_led = 0;
 
+		}
+
+		// cập nhật led hiện tại mỗi 10ms
+		update7SEG(index_led);
+
+		// đếm toggle DOT
+		dot_counter++;
+		if(dot_counter >= 100){
+			dot_counter = 0;
+
+			HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
 		}
 }
 
