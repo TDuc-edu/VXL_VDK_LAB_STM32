@@ -1,1 +1,2 @@
-../Core/Src/led_7seg.c:14:6:display7SEG	11
+../Core/Src/led_7seg.c:13:6:display7SEG	11
+../Core/Src/led_7seg.c:115:6:update7SEG	5

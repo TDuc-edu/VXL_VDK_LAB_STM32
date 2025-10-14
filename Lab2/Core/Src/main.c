@@ -243,45 +243,44 @@ static void MX_GPIO_Init(void)
 
 const int MAX_LED = 4;
 int index_led = 0;
-int led_buffer[4] = {1,2,3,4};
 int counter = 0;
 
-void update7SEG (int index) {
-
-	// tắt tất cả các led
-	switch  (index) {
-
-
-//	HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin, 1);
-	case 0:
-		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN2_Pin | EN3_Pin, 1);
-		display7SEG(led_buffer[0]);
-		HAL_GPIO_WritePin(GPIOA, EN0_Pin, 0);
-		break ;
-
-	case 1:
-		HAL_GPIO_WritePin(GPIOA,  EN0_Pin | EN2_Pin | EN3_Pin, 1);
-		display7SEG(led_buffer[1]);
-		HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
-		break ;
-
-	case 2:
-		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN0_Pin | EN3_Pin, 1);
-		display7SEG(led_buffer[2]);
-		HAL_GPIO_WritePin(GPIOA, EN2_Pin, 0);
-		break ;
-
-	case 3:
-		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN2_Pin | EN0_Pin, 1);
-		display7SEG(led_buffer[3]);
-		HAL_GPIO_WritePin(GPIOA, EN3_Pin, 0);
-		break ;
-
-	default:
-		break;
-
-	}
-}
+//void update7SEG (int index) {
+//
+//	// tắt tất cả các led
+//	switch  (index) {
+//
+//
+////	HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin, 1);
+//	case 0:
+//		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN2_Pin | EN3_Pin, 1);
+//		display7SEG(led_buffer[0]);
+//		HAL_GPIO_WritePin(GPIOA, EN0_Pin, 0);
+//		break ;
+//
+//	case 1:
+//		HAL_GPIO_WritePin(GPIOA,  EN0_Pin | EN2_Pin | EN3_Pin, 1);
+//		display7SEG(led_buffer[1]);
+//		HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
+//		break ;
+//
+//	case 2:
+//		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN0_Pin | EN3_Pin, 1);
+//		display7SEG(led_buffer[2]);
+//		HAL_GPIO_WritePin(GPIOA, EN2_Pin, 0);
+//		break ;
+//
+//	case 3:
+//		HAL_GPIO_WritePin(GPIOA,  EN1_Pin | EN2_Pin | EN0_Pin, 1);
+//		display7SEG(led_buffer[3]);
+//		HAL_GPIO_WritePin(GPIOA, EN3_Pin, 0);
+//		break ;
+//
+//	default:
+//		break;
+//
+//	}
+//}
 
 void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 {
