@@ -252,7 +252,7 @@ void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 	if (htim != &htim2) return;
 
 		counter++;
-		if(counter >= 100){  // 100 x 10ms = 1000ms = 1s
+		if(counter >= 25){  // 100 x 10ms = 1000ms = 1s
 			counter = 0;
 
 			index_led++;
