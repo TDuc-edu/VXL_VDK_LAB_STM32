@@ -14,6 +14,9 @@ int timer0_flag = 0;
 int timer1_counter = 0;
 int timer1_flag = 0;
 
+int timer2_counter_LED = 0;
+int timer2_flag_LED = 0;
+
 int TIMER_CYCLE = 10;  // Chu kỳ ngắt timer (10ms)
 
 /**
@@ -25,15 +28,17 @@ void setTimer0(int duration) {
 	timer0_flag = 0;
 }
 
-/**
- *   Thiết lập timer 1
- *   duration: Thời gian đếm (ms)
- */
+//  Thiết lập timer 1
+
 void setTimer1(int duration) {
 	timer1_counter = duration / TIMER_CYCLE;
 	timer1_flag = 0;
 }
 
+void setTimer2_LED(int duration) {
+	timer2_counter_LED = duration / TIMER_CYCLE;
+	timer2_flag_LED = 0;
+}
 /**
  *  Hàm chạy timer (gọi trong ngắt)
  */
@@ -51,4 +56,11 @@ void timer_run(void) {
 		if (timer1_counter == 0)
 			timer1_flag = 1;
 	}
+
+	// Timer2
+    if (timer2_counter_LED > 0) {
+        timer2_counter_LED--;
+        if (timer2_counter_LED == 0)
+            timer2_flag_LED = 1;
+    }
 }

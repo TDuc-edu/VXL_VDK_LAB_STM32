@@ -15,11 +15,15 @@ extern int timer0_flag;
 extern int timer1_counter;
 extern int timer1_flag;
 
+extern int timer2_counter_LED; // timer cho led scan.
+extern int timer2_flag_LED;
+
 extern int TIMER_CYCLE;
 
 // Khai báo hàm
 void setTimer0(int duration);
 void setTimer1(int duration);
+void setTimer2_LED(int duration);
 void timer_run(void);
 
 #endif /* INC_SOFTWARE_TIMER_H_ */

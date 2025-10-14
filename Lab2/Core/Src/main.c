@@ -57,7 +57,8 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+const int MAX_LED = 4;
+int index_led = 0;
 /* USER CODE END 0 */
 
 /**
@@ -94,11 +95,13 @@ int main(void) {
 	// khởi tạo software timer
 	setTimer0(1000);  // Timer cho đồng hồ (1 giây)
 	setTimer1(1000);  // Timer cho DOT (1 giây)
+	setTimer2_LED(250); //timer cho led (10ms)
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
+		//Clock
 		if (timer0_flag == 1) {
 
 			second++;
@@ -117,9 +120,21 @@ int main(void) {
 			setTimer0(1000);
 		}
 
-		if (timer1_flag == 1){
+		// Toggle DOT
+		if (timer1_flag == 1) {
 			HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
 			setTimer1(1000);
+		}
+
+		// led 7 doan
+		if (timer2_flag_LED == 1) {
+			index_led++;
+			if (index_led >= MAX_LED) {
+				index_led = 0;
+			}
+			update7SEG(index_led);
+
+			setTimer2_LED(250);
 		}
 		/* USER CODE END WHILE */
 
@@ -256,27 +271,10 @@ static void MX_GPIO_Init(void) {
 
 /* USER CODE BEGIN 4 */
 
-const int MAX_LED = 4;
-int index_led = 0;
-int counter = 0;
-
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	if (htim != &htim2)
-		return;
+	if (htim != &htim2) return;
 
 	timer_run();
-
-	// quét led 7b đoạn
-	counter++;
-	if (counter >= 25) {  // 100 x 10ms = 1000ms = 1s
-		counter = 0;
-		index_led++;
-		if (index_led >= MAX_LED)
-			index_led = 0;
-	}
-	// cập nhật led hiện tại mỗi 10ms
-	update7SEG(index_led);
 
 }
 
