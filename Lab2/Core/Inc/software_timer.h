@@ -22,6 +22,10 @@ extern int timer3_counter_LedMatrix; 	//timer cho led matrix
 extern int timer3_flag_LedMatrix;
 
 
+//animation
+extern int timer4_counter;
+extern int timer4_flag;
+
 extern int TIMER_CYCLE;
 
 // Khai báo hàm
@@ -29,6 +33,7 @@ void setTimer0(int duration);
 void setTimer1(int duration);
 void setTimer2_LED(int duration);
 void setTimer3(int dutation);
+void setTimer4(int dutation);
 void timer_run(void);
 
 #endif /* INC_SOFTWARE_TIMER_H_ */

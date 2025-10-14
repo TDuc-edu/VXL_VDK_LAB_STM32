@@ -1,3 +1,7 @@
-../Core/Src/led_matrix.c:26:6:decodeLed	3
-../Core/Src/led_matrix.c:40:6:updateLEDMatrix	9
-../Core/Src/led_matrix.c:62:6:setMatrixChar	2
+../Core/Src/led_matrix.c:53:6:decodeLed	3
+../Core/Src/led_matrix.c:67:6:updateLEDMatrix	9
+../Core/Src/led_matrix.c:89:6:setMatrixChar	2
+../Core/Src/led_matrix.c:96:6:initAnimation	1
+../Core/Src/led_matrix.c:106:6:nextFrame	3
+../Core/Src/led_matrix.c:118:6:shiftLeft	2
+../Core/Src/led_matrix.c:129:6:shiftRight	2

@@ -13,6 +13,11 @@
 int index_led_matrix = 0;
 uint8_t matrix_buffer[8] = {0x00, 0xFC, 0xFE, 0x33, 0x33, 0xFE, 0xFC, 0x00};
 
+// Animation
+int current_frame = 0;
+int total_frames = 0;
+const uint8_t (*animation_data)[8] = NULL;
+
 // Ký tự A
 const uint8_t CHAR_A[8] = {0x00, 0xFC, 0xFE, 0x33, 0x33, 0xFE, 0xFC, 0x00};
 
@@ -21,6 +26,28 @@ const uint8_t CHAR_B[8] = {0x00, 0xFF, 0xFF, 0x99, 0x99, 0xFF, 0x66, 0x00};
 
 // Ký tự C
 const uint8_t CHAR_C[8] = {0x00, 0x7E, 0xFF, 0xC3, 0xC3, 0xC3, 0x42, 0x00};
+
+
+// ANIMATION: NGƯỜI ĐI BỘ
+const uint8_t ANIMATION_WALKING[8][8] = {
+    // Frame 0
+    {0x00, 0x3C, 0x3C, 0x3C, 0x18, 0x24, 0x42, 0x00},
+    // Frame 1
+    {0x00, 0x3C, 0x3C, 0x3C, 0x18, 0x42, 0x24, 0x00},
+    // Frame 2
+    {0x00, 0x3C, 0x3C, 0x3C, 0x18, 0x24, 0x42, 0x00},
+    // Frame 3
+    {0x00, 0x3C, 0x3C, 0x3C, 0x18, 0x42, 0x24, 0x00},
+    // Frame 4 - Dịch sang trái
+    {0x3C, 0x3C, 0x3C, 0x18, 0x24, 0x42, 0x00, 0x00},
+    // Frame 5
+    {0x3C, 0x3C, 0x3C, 0x18, 0x42, 0x24, 0x00, 0x00},
+    // Frame 6
+    {0x3C, 0x3C, 0x18, 0x24, 0x42, 0x00, 0x00, 0x00},
+    // Frame 7
+    {0x3C, 0x18, 0x24, 0x42, 0x00, 0x00, 0x00, 0x00}
+};
+
 
 // Giải mã 8 bit → 8 hàng ROW
 void decodeLed(uint8_t _8bit_led_) {
@@ -63,4 +90,48 @@ void setMatrixChar(const uint8_t* pattern) {
     for (int i = 0; i < 8; i++) {
         matrix_buffer[i] = pattern[i];
     }
+}
+
+
+void initAnimation(const uint8_t animation[][8], int num_frames) {
+    animation_data = animation;
+    total_frames = num_frames;
+    current_frame = 0;
+
+    // Load frame đầu tiên
+    setMatrixChar(animation[0]);
+}
+
+
+void nextFrame(void) {
+    if (animation_data == NULL) return;
+
+    current_frame++;
+    if (current_frame >= total_frames) {
+        current_frame = 0;
+    }
+
+    // Load frame hiện tại
+    setMatrixChar(animation_data[current_frame]);
+}
+
+void shiftLeft(void) {
+    uint8_t temp = matrix_buffer[0];
+
+    for (int i = 0; i < 7; i++) {
+        matrix_buffer[i] = matrix_buffer[i + 1];
+    }
+
+    matrix_buffer[7] = temp;  // Hoặc = 0x00 để không lặp lại
+}
+
+
+void shiftRight(void) {
+    uint8_t temp = matrix_buffer[7];
+
+    for (int i = 7; i > 0; i--) {
+        matrix_buffer[i] = matrix_buffer[i - 1];
+    }
+
+    matrix_buffer[0] = temp;  // Hoặc = 0x00
 }

@@ -20,6 +20,9 @@ int timer2_flag_LED = 0;
 int timer3_counter_LedMatrix = 0; 	//timer cho led matrix
 int timer3_flag_LedMatrix = 0 ;
 
+int timer4_counter = 0;
+int timer4_flag = 0;
+
 int TIMER_CYCLE = 10;  // Chu kỳ ngắt timer (10ms)
 
 /**
@@ -46,6 +49,10 @@ void setTimer2_LED(int duration) {
 void setTimer3(int duration) {
 	timer3_counter_LedMatrix = duration / TIMER_CYCLE;
 	timer3_flag_LedMatrix = 0;
+}
+void setTimer4(int duration) {
+	timer4_counter = duration / TIMER_CYCLE;
+	timer4_flag = 0;
 }
 /**
  *  Hàm chạy timer (gọi trong ngắt)
@@ -78,4 +85,11 @@ void timer_run(void) {
         if (timer3_counter_LedMatrix == 0)
             timer3_flag_LedMatrix = 1;
     }
+    // Timer4
+	if (timer4_counter > 0) {
+		timer4_counter--;
+		if (timer4_counter == 0)
+			timer4_flag = 1;
+	}
+
 }

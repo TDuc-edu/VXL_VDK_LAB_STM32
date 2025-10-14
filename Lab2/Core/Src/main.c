@@ -100,8 +100,11 @@ int main(void) {
 	setTimer1(1000);  // Timer cho DOT (1 giây)
 	setTimer2_LED(250); //timer cho led (10ms)
 	setTimer3(10);
+	setTimer4(10);
 
-	setMatrixChar(CHAR_A);
+//	setMatrixChar(CHAR_A);
+	initAnimation(ANIMATION_WALKING, 8);
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -144,12 +147,20 @@ int main(void) {
 //		}
 
 		// LED MATRIX
-		if (timer3_flag_LedMatrix == 1) {
-			index_led_matrix++;
-			if (index_led_matrix >= 8) index_led_matrix = 0;
-			updateLEDMatrix(index_led_matrix);
-			setTimer3(10);
-		}
+//		if (timer3_flag_LedMatrix == 1) {
+//			index_led_matrix++;
+//			if (index_led_matrix >= 8) index_led_matrix = 0;
+//			updateLEDMatrix(index_led_matrix);
+//			setTimer3(10);
+//		}
+
+		//animation
+        if (timer4_flag == 1) {
+//            nextFrame();      // Chuyển sang frame tiếp theo
+            shiftLeft();
+        	// Hoặc dùng: shiftLeft();  // Dịch trái 1 cột
+            setTimer4(10);   // Reset timer
+        }
 
 		/* USER CODE END WHILE */
 
