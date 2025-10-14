@@ -1,0 +1,3 @@
+../Core/Src/led_matrix.c:26:6:decodeLed	3
+../Core/Src/led_matrix.c:40:6:updateLEDMatrix	9
+../Core/Src/led_matrix.c:62:6:setMatrixChar	2
