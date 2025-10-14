@@ -8,8 +8,9 @@
 #include "main.h"
 #include "led_7seg.h"
 
-int led_buffer[4] = {1,2,3,4};
+int led_buffer[4] = {0,0,0,0};
 
+int hour = 15 , minute = 8, second = 50 ;
 void display7SEG(int num){
 	switch (num){
 	case 0:
@@ -142,4 +143,10 @@ void update7SEG (int index) {
 	}
 }
 
-void updateClockBuffer();
+void updateClockBuffer(){
+    led_buffer[0] = hour / 10;   // chữ số hàng chục của hour
+    led_buffer[1] = hour % 10;   // chữ số hàng đơn vị của hour
+
+    led_buffer[2] = minute / 10; // chữ số hàng chục của minute
+    led_buffer[3] = minute % 10; // chữ số hàng đơn vị của minute
+}

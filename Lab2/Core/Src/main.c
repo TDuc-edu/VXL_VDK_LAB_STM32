@@ -26,13 +26,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef enum {
-	DISPLAY_DIGIT_1,
-	DISPLAY_DIGIT_2,
-	DISPLAY_DIGIT_3,
-	DISPLAY_DIGIT_0,
-	DiSPLAY_DOT
-} display_state_t;
+
 
 /* USER CODE END PTD */
 
@@ -106,6 +100,20 @@ HAL_TIM_Base_Start_IT(&htim2);
   {
     /* USER CODE END WHILE */
 
+      second++;
+      if (second >= 60) {
+          second = 0;
+          minute++;
+      }
+      if (minute >= 60) {
+          minute = 0;
+          hour++;
+      }
+      if (hour >= 24) {
+          hour = 0;
+      }
+      updateClockBuffer();
+      HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -254,12 +262,10 @@ void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 		counter++;
 		if(counter >= 25){  // 100 x 10ms = 1000ms = 1s
 			counter = 0;
-
 			index_led++;
 			if (index_led >= MAX_LED) index_led = 0;
 
 		}
-
 		// cập nhật led hiện tại mỗi 10ms
 		update7SEG(index_led);
 
@@ -267,7 +273,6 @@ void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
 		dot_counter++;
 		if(dot_counter >= 100){
 			dot_counter = 0;
-
 			HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
 		}
 }
