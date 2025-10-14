@@ -8,7 +8,7 @@
 #include "main.h"
 #include "led_7seg.h"
 
-
+int led_buffer[4] = {1,2,3,4};
 
 void display7SEG(int num){
 	switch (num){
@@ -109,9 +109,6 @@ void display7SEG(int num){
 }
 
 
-int led_buffer[4] = {1,2,3,4};
-
-
 void update7SEG (int index) {
 
 	switch  (index) {
@@ -145,4 +142,4 @@ void update7SEG (int index) {
 	}
 }
 
-
+void updateClockBuffer();
