@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "led_7seg.h"
+#include "software_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,22 +57,7 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int timer0_counter = 0; // đếm ngược số interrupt còn lại
-int timer0_flag = 0;	// cờ báo hiệu timer đã hết thời gian
-int TIMER_CYCLE = 10;	// chu kỳ interrupt là 10ms
 
-void setTimer0(int duration) {
-	timer0_counter = duration / TIMER_CYCLE;
-	timer0_flag = 0;
-}
-
-void timer_run() {
-	if (timer0_counter > 0) {
-		timer0_counter--;
-		if (timer0_counter == 0)
-			timer0_flag = 1;
-	}
-}
 /* USER CODE END 0 */
 
 /**
@@ -105,14 +91,14 @@ int main(void) {
 	MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
 	HAL_TIM_Base_Start_IT(&htim2);
-	setTimer0(1000); 	// 1s
+	// khởi tạo software timer
+	setTimer0(1000);  // Timer cho đồng hồ (1 giây)
+	setTimer1(1000);  // Timer cho DOT (1 giây)
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		/* USER CODE END WHILE */
-
 		if (timer0_flag == 1) {
 
 			second++;
@@ -128,11 +114,17 @@ int main(void) {
 				hour = 0;
 			}
 			updateClockBuffer();
-
-
 			setTimer0(1000);
-			/* USER CODE BEGIN 3 */
 		}
+
+		if (timer1_flag == 1){
+			HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
+			setTimer1(1000);
+		}
+		/* USER CODE END WHILE */
+
+		/* USER CODE BEGIN 3 */
+
 	}
 
 	/* USER CODE END 3 */
@@ -230,7 +222,7 @@ static void MX_GPIO_Init(void) {
 
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(GPIOA,
-			DOT_Pin | LED_RED_Pin | EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin,
+	DOT_Pin | LED_RED_Pin | EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin,
 			GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
@@ -267,7 +259,7 @@ static void MX_GPIO_Init(void) {
 const int MAX_LED = 4;
 int index_led = 0;
 int counter = 0;
-int dot_counter = 0;
+
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim != &htim2)
@@ -275,6 +267,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 	timer_run();
 
+	// quét led 7b đoạn
 	counter++;
 	if (counter >= 25) {  // 100 x 10ms = 1000ms = 1s
 		counter = 0;
@@ -285,12 +278,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	// cập nhật led hiện tại mỗi 10ms
 	update7SEG(index_led);
 
-	// đếm toggle DOT
-	dot_counter++;
-	if (dot_counter >= 100) {
-		dot_counter = 0;
-		HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
-	}
 }
 
 /* USER CODE END 4 */
