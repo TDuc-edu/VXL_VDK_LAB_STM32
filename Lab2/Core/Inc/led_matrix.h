@@ -14,24 +14,22 @@
 // Biến global
 extern int index_led_matrix;
 extern uint8_t matrix_buffer[8];
-// Animation
-extern int current_frame;
-extern int total_frames;
 
 // Hàm chính
 void updateLEDMatrix(int index);
 void setMatrixChar(const uint8_t* pattern);
 
 // Hàm animation
-void initAnimation(const uint8_t animation[][8], int num_frames);
-void nextFrame(void);
-void shiftLeft(void);
-void shiftRight(void);
+//void initAnimation(const uint8_t animation[][8], int num_frames);
+//void nextFrame(void);
+//void shiftLeft(void);
+//void shiftRight(void);
+void shiftMatrixRight(void);
+void shiftMatrixLeft(void);
 
 // Ký tự mẫu
 extern const uint8_t CHAR_A[8];
 extern const uint8_t CHAR_B[8];
 extern const uint8_t CHAR_C[8];
-extern const uint8_t ANIMATION_WALKING[8][8];  // Người đi bộ
 
 #endif
