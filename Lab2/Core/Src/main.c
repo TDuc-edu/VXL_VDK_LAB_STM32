@@ -117,7 +117,7 @@ int main(void) {
 			setTimer0(1000);
 		}
 
-		if (timer1_flag == 1){
+		if (timer1_flag == 1) {
 			HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
 			setTimer1(1000);
 		}
@@ -259,7 +259,6 @@ static void MX_GPIO_Init(void) {
 const int MAX_LED = 4;
 int index_led = 0;
 int counter = 0;
-
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim != &htim2)
