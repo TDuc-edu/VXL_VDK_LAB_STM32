@@ -61,7 +61,6 @@ static void MX_TIM2_Init(void);
 const int MAX_LED = 4;
 int index_led = 0;
 
-
 /* USER CODE END 0 */
 
 /**
@@ -100,6 +99,7 @@ int main(void) {
 	setTimer1(1000);  // Timer cho DOT (1 giây)
 	setTimer2_LED(250); //timer cho led (10ms)
 	setTimer3(10);
+	setTimer5(2000);
 
 	setMatrixChar(CHAR_A);
 	/* USER CODE END 2 */
@@ -108,47 +108,54 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		//Clock
-//		if (timer0_flag == 1) {
-//
-//			second++;
-//			if (second >= 60) {
-//				second = 0;
-//				minute++;
-//			}
-//			if (minute >= 60) {
-//				minute = 0;
-//				hour++;
-//			}
-//			if (hour >= 24) {
-//				hour = 0;
-//			}
-//			updateClockBuffer();
-//			setTimer0(1000);
-//		}
-//
-//		// Toggle DOT
-//		if (timer1_flag == 1) {
-//			HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
-//			setTimer1(1000);
-//		}
-//
-//		// led 7 doan
-//		if (timer2_flag_LED == 1) {
-//			index_led++;
-//			if (index_led >= MAX_LED) {
-//				index_led = 0;
-//			}
-//			update7SEG(index_led);
-//
-//			setTimer2_LED(250);
-//		}
+		if (timer0_flag == 1) {
+
+			second++;
+			if (second >= 60) {
+				second = 0;
+				minute++;
+			}
+			if (minute >= 60) {
+				minute = 0;
+				hour++;
+			}
+			if (hour >= 24) {
+				hour = 0;
+			}
+			updateClockBuffer();
+			setTimer0(1000);
+		}
+
+		// Toggle DOT
+		if (timer1_flag == 1) {
+			HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
+			setTimer1(1000);
+		}
+
+		// led 7 doan
+		if (timer2_flag_LED == 1) {
+			index_led++;
+			if (index_led >= MAX_LED) {
+				index_led = 0;
+			}
+			update7SEG(index_led);
+
+			setTimer2_LED(250);
+		}
 
 		// LED MATRIX
 		if (timer3_flag_LedMatrix == 1) {
 			index_led_matrix++;
-			if (index_led_matrix >= 8) index_led_matrix = 0;
+			if (index_led_matrix >= 8)
+				index_led_matrix = 0;
 			updateLEDMatrix(index_led_matrix);
 			setTimer3(10);
+		}
+
+		//LED_RED
+		if (timer5_flag == 1) {
+			HAL_GPIO_TogglePin( LED_RED_GPIO_Port, LED_RED_Pin);
+			setTimer5(2000);
 		}
 
 		/* USER CODE END WHILE */
@@ -296,10 +303,9 @@ static void MX_GPIO_Init(void) {
 /* USER CODE BEGIN 4 */
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	if (htim != &htim2)
-		return;
-
-	timer_run();
+    if (htim == &htim2) {
+        timer_run();
+    }
 
 }
 

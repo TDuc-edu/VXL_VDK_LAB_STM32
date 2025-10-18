@@ -21,6 +21,9 @@ extern int timer2_flag_LED;
 extern int timer3_counter_LedMatrix; 	//timer cho led matrix
 extern int timer3_flag_LedMatrix;
 
+extern int timer5_counter; 	//timer cho LED_RED
+extern int timer5_flag;
+
 
 extern int TIMER_CYCLE;
 
@@ -28,7 +31,8 @@ extern int TIMER_CYCLE;
 void setTimer0(int duration);
 void setTimer1(int duration);
 void setTimer2_LED(int duration);
-void setTimer3(int dutation);
+void setTimer3(int duration);
+void setTimer5(int duration);
 void timer_run(void);
 
 #endif /* INC_SOFTWARE_TIMER_H_ */
