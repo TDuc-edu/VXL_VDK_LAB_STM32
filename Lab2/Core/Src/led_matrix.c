@@ -82,10 +82,10 @@ void shiftMatrixRight(void) {
     matrix_buffer[0] = temp;  // Cột cuối → Cột đầu
 }
 
-/**
- * @brief  Dịch chuyển buffer sang TRÁI
- * @note   Cột 0 → Cột 7 (vòng tròn)
- */
+
+ // Dịch chuyển buffer sang TRÁI
+ // Cột 0 → Cột 7 (vòng tròn)
+
 void shiftMatrixLeft(void) {
     uint8_t temp = matrix_buffer[0];  // Lưu cột đầu
 
