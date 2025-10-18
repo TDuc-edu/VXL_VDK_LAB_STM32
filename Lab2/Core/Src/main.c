@@ -115,22 +115,22 @@ int main(void) {
 
 		if (timer0_flag == 1) {
 
-			second++;
-			if (second >= 60) {
-				second = 0;
-				minute++;
-			}
-			if (minute >= 60) {
-				minute = 0;
-				hour++;
-			}
-			if (hour >= 24) {
-				hour = 0;
-			}
-			updateClockBuffer();
+//			second++;
+//			if (second >= 60) {
+//				second = 0;
+//				minute++;
+//			}
+//			if (minute >= 60) {
+//				minute = 0;
+//				hour++;
+//			}
+//			if (hour >= 24) {
+//				hour = 0;
+//			}
+//			updateClockBuffer();
+			HAL_GPIO_TogglePin( LED_RED_GPIO_Port, LED_RED_Pin);
 
-
-			setTimer0(1000);
+			setTimer0(2000);
 			/* USER CODE BEGIN 3 */
 		}
 	}
@@ -230,7 +230,7 @@ static void MX_GPIO_Init(void) {
 
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(GPIOA,
-			DOT_Pin | LED_RED_Pin | EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin,
+	DOT_Pin | LED_RED_Pin | EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin,
 			GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
@@ -264,33 +264,32 @@ static void MX_GPIO_Init(void) {
 
 /* USER CODE BEGIN 4 */
 
-const int MAX_LED = 4;
-int index_led = 0;
-int counter = 0;
-int dot_counter = 0;
-
+//const int MAX_LED = 4;
+//int index_led = 0;
+//int counter = 0;
+//int dot_counter = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	if (htim != &htim2)
-		return;
+//	if (htim != &htim2)
+//		return;
 
 	timer_run();
 
-	counter++;
-	if (counter >= 25) {  // 100 x 10ms = 1000ms = 1s
-		counter = 0;
-		index_led++;
-		if (index_led >= MAX_LED)
-			index_led = 0;
-	}
-	// cập nhật led hiện tại mỗi 10ms
-	update7SEG(index_led);
-
-	// đếm toggle DOT
-	dot_counter++;
-	if (dot_counter >= 100) {
-		dot_counter = 0;
-		HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
-	}
+//	counter++;
+//	if (counter >= 25) {  // 100 x 10ms = 1000ms = 1s
+//		counter = 0;
+//		index_led++;
+//		if (index_led >= MAX_LED)
+//			index_led = 0;
+//	}
+//	// cập nhật led hiện tại mỗi 10ms
+//	update7SEG(index_led);
+//
+//	// đếm toggle DOT
+//	dot_counter++;
+//	if (dot_counter >= 100) {
+//		dot_counter = 0;
+//		HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
+//	}
 }
 
 /* USER CODE END 4 */
