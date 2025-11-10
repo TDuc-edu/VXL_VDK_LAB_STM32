@@ -17,11 +17,11 @@
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <timer.h>     // Exercise 4: Software timer system
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "software_timer.h"     // Exercise 4: Software timer system
 #include "input_reading.h"      // Exercise 5: Button reading & debouncing
 #include "input_processing.h"   // Exercise 5: Mode switching FSM
 /* USER CODE END Includes */
