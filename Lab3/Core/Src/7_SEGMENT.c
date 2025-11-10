@@ -9,13 +9,13 @@
 #include<7_SEGMENT.h>
 
 int16_t array_seg_pin[]={
-		SEG_0_Pin,
-		SEG_1_Pin,
-		SEG_2_Pin,
-		SEG_3_Pin,
-		SEG_4_Pin,
-		SEG_5_Pin,
-		SEG_6_Pin
+		LED7SEG_0_Pin,
+		LED7SEG_1_Pin,
+		LED7SEG_2_Pin,
+		LED7SEG_3_Pin,
+		LED7SEG_4_Pin,
+		LED7SEG_5_Pin,
+		LED7SEG_6_Pin
 };
 int16_t array_EN_pin[]={
 		EN0_Pin,

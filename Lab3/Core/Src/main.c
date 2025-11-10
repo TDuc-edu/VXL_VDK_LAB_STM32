@@ -6,7 +6,7 @@
  ******************************************************************************
  * @attention
  *
- * Copyright (c) 2025 STMicroelectronics.
+ * Copyright (c) 2024 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -17,13 +17,11 @@
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <timer.h>     // Exercise 4: Software timer system
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "input_reading.h"      // Exercise 5: Button reading & debouncing
-#include "input_processing.h"   // Exercise 5: Mode switching FSM
+#include<global.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,300 +60,206 @@ static void MX_TIM2_Init(void);
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
-int main(void)
-{
+ * @brief  The application entry point.
+ * @retval int
+ */
+int main(void) {
 
-  /* USER CODE BEGIN 1 */
+	/* USER CODE BEGIN 1 */
 
-  /* USER CODE END 1 */
+	/* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
+	/* MCU Configuration--------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+	HAL_Init();
 
-  /* USER CODE BEGIN Init */
+	/* USER CODE BEGIN Init */
 
-  /* USER CODE END Init */
+	/* USER CODE END Init */
 
-  /* Configure the system clock */
-  SystemClock_Config();
+	/* Configure the system clock */
+	SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
+	/* USER CODE BEGIN SysInit */
 
-  /* USER CODE END SysInit */
+	/* USER CODE END SysInit */
 
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_TIM2_Init();
-  /* USER CODE BEGIN 2 */
-  
-  /* ========================================================================
-   * EXERCISE 4: KHỞI TẠO HỆ THỐNG
-   * ========================================================================
-   */
-  
-  // 1. Khởi tạo software timer system
-  timer_init();
-  
-  // 2. Bật timer interrupt TIM2 (10ms)
-  HAL_TIM_Base_Start_IT(&htim2);
-  
-  // 3. Setup các timer cần thiết cho demo
-  setTimer(TIMER_LED_BLINK, 250);      // LED nhấp nháy 2Hz (250ms toggle)
-  setTimer(TIMER_TRAFFIC_LIGHT, 5000); // Đèn giao thông 5s
-  
-  /* USER CODE END 2 */
+	/* Initialize all configured peripherals */
+	MX_GPIO_Init();
+	MX_TIM2_Init();
+	/* USER CODE BEGIN 2 */
+	HAL_TIM_Base_Start_IT(&htim2);
+	/* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+	/* Infinite loop */
+	/* USER CODE BEGIN WHILE */
+
 	while (1) {
+		run();
+		/* USER CODE END WHILE */
 
-    /* USER CODE END WHILE */
+		/* USER CODE BEGIN 3 */
+	}
+	/* USER CODE END 3 */
+}
 
-    /* USER CODE BEGIN 3 */
-    
-    /* ========================================================================
-     * EXERCISE 5: MODE SWITCHING & BUTTON PROCESSING
-     * ========================================================================
-     * Xử lý button MODE để chuyển đổi giữa các mode
-     */
-    
-    // Xử lý mode switching (button 1)
-    fsm_for_input_processing();
-    
-    // Xử lý tùy theo mode hiện tại
-    switch(get_current_mode()) {
-        case MODE_1_NORMAL:
-            // TODO Exercise 6: Chạy traffic light bình thường
-            // fsm_traffic_light();
-            break;
-            
-        case MODE_2_RED_MODIFY:
-            // TODO Exercise 7: Nhấp nháy LED đỏ, cho phép chỉnh thời gian
-            // fsm_modify_red_duration();
-            break;
-            
-        case MODE_3_AMBER_MODIFY:
-            // TODO Exercise 8: Nhấp nháy LED vàng
-            // fsm_modify_amber_duration();
-            break;
-            
-        case MODE_4_GREEN_MODIFY:
-            // TODO Exercise 9: Nhấp nháy LED xanh
-            // fsm_modify_green_duration();
-            break;
-    }
+/**
+ * @brief System Clock Configuration
+ * @retval None
+ */
+void SystemClock_Config(void) {
+	RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
+	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 
+	/** Initializes the RCC Oscillators according to the specified parameters
+	 * in the RCC_OscInitTypeDef structure.
+	 */
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+		Error_Handler();
 	}
 
-  /* USER CODE END 3 */
+	/** Initializes the CPU, AHB and APB buses clocks
+	 */
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
+		Error_Handler();
+	}
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void)
-{
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+ * @brief TIM2 Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_TIM2_Init(void) {
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+	/* USER CODE BEGIN TIM2_Init 0 */
 
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+	/* USER CODE END TIM2_Init 0 */
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
+	TIM_ClockConfigTypeDef sClockSourceConfig = { 0 };
+	TIM_MasterConfigTypeDef sMasterConfig = { 0 };
 
-/**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
+	/* USER CODE BEGIN TIM2_Init 1 */
 
-  /* USER CODE BEGIN TIM2_Init 0 */
+	/* USER CODE END TIM2_Init 1 */
+	htim2.Instance = TIM2;
+	htim2.Init.Prescaler = 7999;
+	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+	htim2.Init.Period = 9;
+	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	if (HAL_TIM_Base_Init(&htim2) != HAL_OK) {
+		Error_Handler();
+	}
+	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+	if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK) {
+		Error_Handler();
+	}
+	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+	if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig)
+			!= HAL_OK) {
+		Error_Handler();
+	}
+	/* USER CODE BEGIN TIM2_Init 2 */
 
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 7999;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 9;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM2_Init 2 */
-
-  /* USER CODE END TIM2_Init 2 */
+	/* USER CODE END TIM2_Init 2 */
 
 }
 
 /**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
+ * @brief GPIO Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_GPIO_Init(void) {
+	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+	/* USER CODE BEGIN MX_GPIO_Init_1 */
+	/* USER CODE END MX_GPIO_Init_1 */
 
-  /* USER CODE END MX_GPIO_Init_1 */
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOA,
+			LED_RED_1_Pin | LED_YELLOW_1_Pin | LED_GREEN_1_Pin | LED_RED_2_Pin 
+					| LED_YELLOW_2_Pin | LED_GREEN_2_Pin | EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_GREEN_1_Pin|LED_YELLOW_1_Pin|LED_GREEN_2_Pin|LED_YELLOW_2_Pin
-                          |LED_RED_2_Pin|EN0_Pin|EN1_Pin|EN2_Pin
-                          |EN3_Pin, GPIO_PIN_RESET);
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOB,
+			LED7SEG_0_Pin | LED7SEG_1_Pin | LED7SEG_2_Pin | LED7SEG_3_Pin
+					| LED7SEG_4_Pin | LED7SEG_5_Pin | LED7SEG_6_Pin,
+			GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LED7SEG_0_Pin|LED7SEG_1_Pin|LED7SEG_2_Pin|LED7SEG_3_Pin
-                          |LED7SEG_4_Pin|LED7SEG_5_Pin|LED7SEG_6_Pin, GPIO_PIN_RESET);
+	/*Configure GPIO pin : BUTTON_1_Pin */
+	GPIO_InitStruct.Pin = BUTTON_1_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(BUTTON_1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LED_GREEN_1_Pin LED_YELLOW_1_Pin LED_GREEN_2_Pin LED_YELLOW_2_Pin
-                           LED_RED_2_Pin EN0_Pin EN1_Pin EN2_Pin
-                           EN3_Pin */
-  GPIO_InitStruct.Pin = LED_GREEN_1_Pin|LED_YELLOW_1_Pin|LED_GREEN_2_Pin|LED_YELLOW_2_Pin
-                          |LED_RED_2_Pin|EN0_Pin|EN1_Pin|EN2_Pin
-                          |EN3_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	/*Configure GPIO pins : LED_RED_1_Pin LED_YELLOW_1_Pin LED_GREEN_1_Pin LED_RED_2_Pin
+	 LED_YELLOW_2_Pin LED_GREEN_2_Pin EN0_Pin EN1_Pin EN2_Pin EN3_Pin */
+	GPIO_InitStruct.Pin = LED_RED_1_Pin | LED_YELLOW_1_Pin | LED_GREEN_1_Pin | LED_RED_2_Pin
+			| LED_YELLOW_2_Pin | LED_GREEN_2_Pin | EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : LED_RED_1_Pin */
-  GPIO_InitStruct.Pin = LED_RED_1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(LED_RED_1_GPIO_Port, &GPIO_InitStruct);
+	/*Configure GPIO pins : BUTTON_0_Pin BUTTON_2_Pin */
+	GPIO_InitStruct.Pin = BUTTON_0_Pin | BUTTON_2_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LED7SEG_0_Pin LED7SEG_1_Pin LED7SEG_2_Pin LED7SEG_3_Pin
-                           LED7SEG_4_Pin LED7SEG_5_Pin LED7SEG_6_Pin */
-  GPIO_InitStruct.Pin = LED7SEG_0_Pin|LED7SEG_1_Pin|LED7SEG_2_Pin|LED7SEG_3_Pin
-                          |LED7SEG_4_Pin|LED7SEG_5_Pin|LED7SEG_6_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	/*Configure GPIO pins : LED7SEG_0_Pin LED7SEG_1_Pin LED7SEG_2_Pin LED7SEG_3_Pin
+	 LED7SEG_4_Pin LED7SEG_5_Pin LED7SEG_6_Pin */
+	GPIO_InitStruct.Pin = LED7SEG_0_Pin | LED7SEG_1_Pin | LED7SEG_2_Pin | LED7SEG_3_Pin
+			| LED7SEG_4_Pin | LED7SEG_5_Pin | LED7SEG_6_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUTTON_2_Pin BUTTON_0_Pin BUTTON_1_Pin */
-  GPIO_InitStruct.Pin = BUTTON_2_Pin|BUTTON_0_Pin|BUTTON_1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
+	/* USER CODE BEGIN MX_GPIO_Init_2 */
+	/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-
-/* ============================================================================
- * EXERCISE 4: TIMER INTERRUPT CALLBACK
- * ============================================================================
- * Hàm này được gọi TỰ ĐỘNG bởi HAL mỗi khi timer interrupt xảy ra
- * 
- * Với cấu hình TIM2:
- * - Prescaler: 7199
- * - Period: 99
- * - Clock: 72MHz
- * → Interrupt mỗi 10ms
- * 
- * Công thức: T = (Prescaler + 1) * (Period + 1) / Clock
- *           T = (7199 + 1) * (99 + 1) / 72,000,000
- *           T = 7200 * 100 / 72,000,000
- *           T = 0.01s = 10ms
- * ============================================================================
- */
-
-/**
- * @brief  Timer Interrupt Callback - 10ms interrupt
- * @param  htim: Timer handle
- * @note   Hàm này OVERRIDE hàm __weak trong HAL library
- */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    // Kiểm tra đúng timer TIM2
-    if (htim->Instance == TIM2) {
-        // Exercise 4: Chạy tất cả software timers
-        timer_run();
-        
-        // Exercise 5: Đọc và xử lý buttons (debouncing)
-        button_reading();
-        
-        // TODO Exercise 6: Scan 7-segment display
-        // update_7segment_scan();
-        
-        // TODO Exercise 6: Update LED blink
-        // update_led_blink();
-    }
+	getKeyInput();
+	timer_run();
 }
-
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
-void Error_Handler(void)
-{
-  /* USER CODE BEGIN Error_Handler_Debug */
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
+void Error_Handler(void) {
+	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
 	__disable_irq();
 	while (1) {
 	}
-  /* USER CODE END Error_Handler_Debug */
+	/* USER CODE END Error_Handler_Debug */
 }
-#ifdef USE_FULL_ASSERT
+
+#ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

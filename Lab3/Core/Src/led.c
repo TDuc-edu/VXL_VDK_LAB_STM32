@@ -9,8 +9,9 @@
 
 int state_led = 0;
 
-int16_t array_LED_pin[] = { RED_1_Pin, RED_2_Pin, GREEN_1_Pin, GREEN_2_Pin,
-		YELLOW_1_Pin, YELLOW_2_Pin };
+int16_t array_LED_pin[] = { LED_RED_1_Pin, LED_RED_2_Pin, LED_GREEN_1_Pin,
+		LED_GREEN_2_Pin, LED_YELLOW_1_Pin, LED_YELLOW_2_Pin };
+
 void turn_on_LED(int Pos) {
 	HAL_GPIO_WritePin(GPIOB, array_LED_pin[Pos], SET);
 }
