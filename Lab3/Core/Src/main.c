@@ -21,7 +21,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "software_timer.h"  // Exercise 4: Include software timer
+#include "software_timer.h"     // Exercise 4: Software timer system
+#include "input_reading.h"      // Exercise 5: Button reading & debouncing
+#include "input_processing.h"   // Exercise 5: Mode switching FSM
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,29 +119,35 @@ int main(void)
     /* USER CODE BEGIN 3 */
     
     /* ========================================================================
-     * EXERCISE 4: DEMO - TEST SOFTWARE TIMER
+     * EXERCISE 5: MODE SWITCHING & BUTTON PROCESSING
      * ========================================================================
-     * Ví dụ: Nhấp nháy LED mỗi 250ms (tần số 2Hz)
+     * Xử lý button MODE để chuyển đổi giữa các mode
      */
     
-    if (isTimerExpired(TIMER_LED_BLINK)) {
-        clearTimer(TIMER_LED_BLINK);
-        
-        // TODO: Toggle LED ở đây
-        // HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-        
-        // Set lại timer
-        setTimer(TIMER_LED_BLINK, 250);
-    }
+    // Xử lý mode switching (button 1)
+    fsm_for_input_processing();
     
-    // Ví dụ timer cho đèn giao thông
-    if (isTimerExpired(TIMER_TRAFFIC_LIGHT)) {
-        clearTimer(TIMER_TRAFFIC_LIGHT);
-        
-        // TODO: Chuyển trạng thái đèn giao thông
-        
-        // Set lại timer
-        setTimer(TIMER_TRAFFIC_LIGHT, 5000);
+    // Xử lý tùy theo mode hiện tại
+    switch(get_current_mode()) {
+        case MODE_1_NORMAL:
+            // TODO Exercise 6: Chạy traffic light bình thường
+            // fsm_traffic_light();
+            break;
+            
+        case MODE_2_RED_MODIFY:
+            // TODO Exercise 7: Nhấp nháy LED đỏ, cho phép chỉnh thời gian
+            // fsm_modify_red_duration();
+            break;
+            
+        case MODE_3_AMBER_MODIFY:
+            // TODO Exercise 8: Nhấp nháy LED vàng
+            // fsm_modify_amber_duration();
+            break;
+            
+        case MODE_4_GREEN_MODIFY:
+            // TODO Exercise 9: Nhấp nháy LED xanh
+            // fsm_modify_green_duration();
+            break;
     }
 
 	}
@@ -311,18 +319,24 @@ static void MX_GPIO_Init(void)
  */
 
 /**
- * @brief  Timer Interrupt Callback
+ * @brief  Timer Interrupt Callback - 10ms interrupt
  * @param  htim: Timer handle
  * @note   Hàm này OVERRIDE hàm __weak trong HAL library
  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     // Kiểm tra đúng timer TIM2
     if (htim->Instance == TIM2) {
-        // Gọi hàm xử lý tất cả software timers
+        // Exercise 4: Chạy tất cả software timers
         timer_run();
         
-        // TODO: Thêm các xử lý khác nếu cần
-        // VD: button_reading(); (Exercise 5)
+        // Exercise 5: Đọc và xử lý buttons (debouncing)
+        button_reading();
+        
+        // TODO Exercise 6: Scan 7-segment display
+        // update_7segment_scan();
+        
+        // TODO Exercise 6: Update LED blink
+        // update_led_blink();
     }
 }
 
