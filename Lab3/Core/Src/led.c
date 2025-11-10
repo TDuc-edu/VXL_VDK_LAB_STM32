@@ -13,13 +13,13 @@ int16_t array_LED_pin[] = { LED_RED_1_Pin, LED_RED_2_Pin, LED_GREEN_1_Pin,
 		LED_GREEN_2_Pin, LED_YELLOW_1_Pin, LED_YELLOW_2_Pin };
 
 void turn_on_LED(int Pos) {
-	HAL_GPIO_WritePin(GPIOB, array_LED_pin[Pos], SET);
+	HAL_GPIO_WritePin(GPIOA, array_LED_pin[Pos], SET);
 }
 void turn_off_LED(int Pos) {
-	HAL_GPIO_WritePin(GPIOB, array_LED_pin[Pos], RESET);
+	HAL_GPIO_WritePin(GPIOA, array_LED_pin[Pos], RESET);
 }
 void toogle_LED(int Pos) {
-	HAL_GPIO_TogglePin(GPIOB, array_LED_pin[Pos]);
+	HAL_GPIO_TogglePin(GPIOA, array_LED_pin[Pos]);
 }
 
 void init_Blink_led(int color_of_led) {
