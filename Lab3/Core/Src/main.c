@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "software_timer.h"  // Exercise 4: Include software timer
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,7 +90,22 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  
+  /* ========================================================================
+   * EXERCISE 4: KHỞI TẠO HỆ THỐNG
+   * ========================================================================
+   */
+  
+  // 1. Khởi tạo software timer system
+  timer_init();
+  
+  // 2. Bật timer interrupt TIM2 (10ms)
+  HAL_TIM_Base_Start_IT(&htim2);
+  
+  // 3. Setup các timer cần thiết cho demo
+  setTimer(TIMER_LED_BLINK, 250);      // LED nhấp nháy 2Hz (250ms toggle)
+  setTimer(TIMER_TRAFFIC_LIGHT, 5000); // Đèn giao thông 5s
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -100,6 +115,32 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    
+    /* ========================================================================
+     * EXERCISE 4: DEMO - TEST SOFTWARE TIMER
+     * ========================================================================
+     * Ví dụ: Nhấp nháy LED mỗi 250ms (tần số 2Hz)
+     */
+    
+    if (isTimerExpired(TIMER_LED_BLINK)) {
+        clearTimer(TIMER_LED_BLINK);
+        
+        // TODO: Toggle LED ở đây
+        // HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+        
+        // Set lại timer
+        setTimer(TIMER_LED_BLINK, 250);
+    }
+    
+    // Ví dụ timer cho đèn giao thông
+    if (isTimerExpired(TIMER_TRAFFIC_LIGHT)) {
+        clearTimer(TIMER_TRAFFIC_LIGHT);
+        
+        // TODO: Chuyển trạng thái đèn giao thông
+        
+        // Set lại timer
+        setTimer(TIMER_TRAFFIC_LIGHT, 5000);
+    }
 
 	}
 
@@ -250,6 +291,40 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+/* ============================================================================
+ * EXERCISE 4: TIMER INTERRUPT CALLBACK
+ * ============================================================================
+ * Hàm này được gọi TỰ ĐỘNG bởi HAL mỗi khi timer interrupt xảy ra
+ * 
+ * Với cấu hình TIM2:
+ * - Prescaler: 7199
+ * - Period: 99
+ * - Clock: 72MHz
+ * → Interrupt mỗi 10ms
+ * 
+ * Công thức: T = (Prescaler + 1) * (Period + 1) / Clock
+ *           T = (7199 + 1) * (99 + 1) / 72,000,000
+ *           T = 7200 * 100 / 72,000,000
+ *           T = 0.01s = 10ms
+ * ============================================================================
+ */
+
+/**
+ * @brief  Timer Interrupt Callback
+ * @param  htim: Timer handle
+ * @note   Hàm này OVERRIDE hàm __weak trong HAL library
+ */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    // Kiểm tra đúng timer TIM2
+    if (htim->Instance == TIM2) {
+        // Gọi hàm xử lý tất cả software timers
+        timer_run();
+        
+        // TODO: Thêm các xử lý khác nếu cần
+        // VD: button_reading(); (Exercise 5)
+    }
+}
 
 /* USER CODE END 4 */
 
