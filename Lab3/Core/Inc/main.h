@@ -57,22 +57,46 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define PA0_OUTPUT_Pin GPIO_PIN_0
-#define PA0_OUTPUT_GPIO_Port GPIOA
-#define PA1_OUTPUT_Pin GPIO_PIN_1
-#define PA1_OUTPUT_GPIO_Port GPIOA
-#define PA2_OUTPUT_Pin GPIO_PIN_2
-#define PA2_OUTPUT_GPIO_Port GPIOA
-#define PA3_OUTPUT_Pin GPIO_PIN_3
-#define PA3_OUTPUT_GPIO_Port GPIOA
-#define PA4_OUTPUT_Pin GPIO_PIN_4
-#define PA4_OUTPUT_GPIO_Port GPIOA
-#define PA5_OUTPUT_Pin GPIO_PIN_5
-#define PA5_OUTPUT_GPIO_Port GPIOA
-#define PA6_OUTPUT_Pin GPIO_PIN_6
-#define PA6_OUTPUT_GPIO_Port GPIOA
-#define PA7_OUTPUT_Pin GPIO_PIN_7
-#define PA7_OUTPUT_GPIO_Port GPIOA
+#define LED_GREEN_1_Pin GPIO_PIN_1
+#define LED_GREEN_1_GPIO_Port GPIOA
+#define LED_YELLOW_1_Pin GPIO_PIN_2
+#define LED_YELLOW_1_GPIO_Port GPIOA
+#define LED_RED_1_Pin GPIO_PIN_3
+#define LED_RED_1_GPIO_Port GPIOA
+#define LED_GREEN_2_Pin GPIO_PIN_4
+#define LED_GREEN_2_GPIO_Port GPIOA
+#define LED_YELLOW_2_Pin GPIO_PIN_5
+#define LED_YELLOW_2_GPIO_Port GPIOA
+#define LED_RED_2_Pin GPIO_PIN_6
+#define LED_RED_2_GPIO_Port GPIOA
+#define LED7SEG_0_Pin GPIO_PIN_0
+#define LED7SEG_0_GPIO_Port GPIOB
+#define LED7SEG_1_Pin GPIO_PIN_1
+#define LED7SEG_1_GPIO_Port GPIOB
+#define LED7SEG_2_Pin GPIO_PIN_2
+#define LED7SEG_2_GPIO_Port GPIOB
+#define BUTTON_2_Pin GPIO_PIN_10
+#define BUTTON_2_GPIO_Port GPIOB
+#define EN0_Pin GPIO_PIN_9
+#define EN0_GPIO_Port GPIOA
+#define EN1_Pin GPIO_PIN_10
+#define EN1_GPIO_Port GPIOA
+#define EN2_Pin GPIO_PIN_11
+#define EN2_GPIO_Port GPIOA
+#define EN3_Pin GPIO_PIN_12
+#define EN3_GPIO_Port GPIOA
+#define LED7SEG_3_Pin GPIO_PIN_3
+#define LED7SEG_3_GPIO_Port GPIOB
+#define LED7SEG_4_Pin GPIO_PIN_4
+#define LED7SEG_4_GPIO_Port GPIOB
+#define LED7SEG_5_Pin GPIO_PIN_5
+#define LED7SEG_5_GPIO_Port GPIOB
+#define LED7SEG_6_Pin GPIO_PIN_6
+#define LED7SEG_6_GPIO_Port GPIOB
+#define BUTTON_0_Pin GPIO_PIN_8
+#define BUTTON_0_GPIO_Port GPIOB
+#define BUTTON_1_Pin GPIO_PIN_9
+#define BUTTON_1_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
