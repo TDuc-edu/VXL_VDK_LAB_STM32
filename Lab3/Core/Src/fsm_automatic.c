@@ -41,7 +41,10 @@ void fsm_automatic_run() {
 		}
 	}
 
-	run_led(lane1, lane2);
+	// Chỉ update display khi có thay đổi từ timer
+	if (actions[TIME_SEGMENT].timer_flag == 1 || actions[ONE_SECOND].timer_flag == 1) {
+		run_led(lane1, lane2);
+	}
 }
 void come_back_auto() {
 	switch (state_automatic) {

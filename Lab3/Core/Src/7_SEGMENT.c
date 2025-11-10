@@ -141,7 +141,6 @@ void run_led(int time, int mode){  // create set_up_timer for enable in INT
 		LED_EN=(LED_EN+1)%4;
 		reset(TIME_SEGMENT);
 		Enable_led(LED_EN);
+		display7SEG(buffer_led[LED_EN]);  // Chỉ update khi timer flag
 	}
-
-	display7SEG(buffer_led[LED_EN]);
 }

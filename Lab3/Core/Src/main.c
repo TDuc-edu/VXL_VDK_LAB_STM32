@@ -97,6 +97,7 @@ int main(void) {
 
 	while (1) {
 		run();
+		HAL_Delay(1);  // Giảm CPU load cho Proteus simulation
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */

@@ -110,19 +110,22 @@ void fsm_manual() {
 		Blink_led(state_manual);
 	} // Blink led
 
-	switch (state_manual) {
-	case RED:
-		/* code */
-		run_led(1, temp_red);
-		break;
-	case GREEN:
-		/* code */
-		run_led(2, temp_green);
-		break;
-	case YELLOW:
-		run_led(3, temp_yellow);
-		break;
-	default:
-		break;
+	// Chỉ update display khi có thay đổi từ timer
+	if (actions[TIME_SEGMENT].timer_flag == 1) {
+		switch (state_manual) {
+		case RED:
+			/* code */
+			run_led(1, temp_red);
+			break;
+		case GREEN:
+			/* code */
+			run_led(2, temp_green);
+			break;
+		case YELLOW:
+			run_led(3, temp_yellow);
+			break;
+		default:
+			break;
+		}
 	} // 7 SEGMENT
 }
