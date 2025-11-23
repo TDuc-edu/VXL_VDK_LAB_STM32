@@ -10,10 +10,10 @@
 
 #include "main.h"
 
-#define	NORMAL_STATE GPIO_PIN_SET
-#define PRESSED_STATE GPIO_PIN_RESET
+#define NORMAL_STATE SET		// nút không nhấn = HIGH (pull-up)
+#define	PRESSED_STATE RESET		// nút nhấn = LOW
 
-void getKeyInput();
-
+int isButtonPress(int index);
+void getKeyInput(int index);			// đọc và xử lý trạng thái nút (gọi từ interrupt)
 
 #endif /* INC_BUTTON_H_ */
