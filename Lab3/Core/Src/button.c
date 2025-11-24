@@ -58,5 +58,4 @@ void getKeyInput(int index) {
 			}
 		}
 	}
-
 }
