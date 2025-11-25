@@ -28,7 +28,7 @@ void light_traffic_greenX(void) {
 
 void light_traffic_redY(void) {
     HAL_GPIO_WritePin(LED_RED_2_GPIO_Port, LED_RED_2_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(LED_YELLOW_2_GPIO_Port, LED_YELLOW_1_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(LED_YELLOW_2_GPIO_Port, LED_YELLOW_2_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(LED_GREEN_2_GPIO_Port, LED_GREEN_2_Pin, GPIO_PIN_RESET);
 }
 

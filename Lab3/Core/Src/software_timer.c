@@ -20,7 +20,7 @@ void setTimer(int index, int duration) {
 void runTimer(int index) {
 	if (timer_counter[index] > 0) {
 		timer_counter[index]--;
-		if (timer_counter <= 0) {
+		if (timer_counter[index] <= 0) {
 			flag_timer[index] = 1;
 		}
 	}

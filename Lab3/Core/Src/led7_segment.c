@@ -54,12 +54,16 @@ void update7SEG(int index) {
 	switch (index) {
 	case 0:
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
+		break;
 	case 1:
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
+		break;
 	case 2:
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+		break;
 	case 3:
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+		break;
 	default:
 		break;
 

@@ -40,7 +40,7 @@ void getKeyInput(int index) {
 
 	if ((KeyReg0[index] == KeyReg1[index])
 			&& (KeyReg1[index] == KeyReg2[index])) {
-		if (KeyReg0[index] != KeyReg1[index]) {
+		if (KeyReg0[index] != KeyReg3[index]) {
 			KeyReg3[index] = KeyReg0[index];
 			if (KeyReg0[index] == PRESSED_STATE) {
 				TimeOutForKeyPress = 500;
