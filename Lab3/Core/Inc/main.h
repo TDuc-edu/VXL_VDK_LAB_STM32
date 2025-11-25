@@ -7,12 +7,13 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -57,47 +58,46 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_GREEN_1_Pin GPIO_PIN_1
-#define LED_GREEN_1_GPIO_Port GPIOA
-#define LED_YELLOW_1_Pin GPIO_PIN_2
-#define LED_YELLOW_1_GPIO_Port GPIOA
-#define LED_RED_1_Pin GPIO_PIN_3
-#define LED_RED_1_GPIO_Port GPIOA
-#define LED_GREEN_2_Pin GPIO_PIN_4
-#define LED_GREEN_2_GPIO_Port GPIOA
-#define LED_YELLOW_2_Pin GPIO_PIN_5
-#define LED_YELLOW_2_GPIO_Port GPIOA
-#define LED_RED_2_Pin GPIO_PIN_6
-#define LED_RED_2_GPIO_Port GPIOA
-#define LED7SEG_0_Pin GPIO_PIN_0
-#define LED7SEG_0_GPIO_Port GPIOB
-#define LED7SEG_1_Pin GPIO_PIN_1
-#define LED7SEG_1_GPIO_Port GPIOB
-#define LED7SEG_2_Pin GPIO_PIN_2
-#define LED7SEG_2_GPIO_Port GPIOB
-#define BUTTON_2_Pin GPIO_PIN_10
-#define BUTTON_2_GPIO_Port GPIOB
-#define EN0_Pin GPIO_PIN_9
+#define RED1_Pin GPIO_PIN_1
+#define RED1_GPIO_Port GPIOA
+#define YELLOW1_Pin GPIO_PIN_2
+#define YELLOW1_GPIO_Port GPIOA
+#define GREEN1_Pin GPIO_PIN_3
+#define GREEN1_GPIO_Port GPIOA
+#define RED2_Pin GPIO_PIN_4
+#define RED2_GPIO_Port GPIOA
+#define YELLOW2_Pin GPIO_PIN_5
+#define YELLOW2_GPIO_Port GPIOA
+#define GREEN2_Pin GPIO_PIN_6
+#define GREEN2_GPIO_Port GPIOA
+#define EN0_Pin GPIO_PIN_7
 #define EN0_GPIO_Port GPIOA
-#define EN1_Pin GPIO_PIN_10
+#define SEG0_Pin GPIO_PIN_0
+#define SEG0_GPIO_Port GPIOB
+#define SEG1_Pin GPIO_PIN_1
+#define SEG1_GPIO_Port GPIOB
+#define SEG2_Pin GPIO_PIN_2
+#define SEG2_GPIO_Port GPIOB
+#define EN1_Pin GPIO_PIN_8
 #define EN1_GPIO_Port GPIOA
-#define EN2_Pin GPIO_PIN_11
+#define EN2_Pin GPIO_PIN_9
 #define EN2_GPIO_Port GPIOA
-#define EN3_Pin GPIO_PIN_12
+#define EN3_Pin GPIO_PIN_10
 #define EN3_GPIO_Port GPIOA
-#define LED7SEG_3_Pin GPIO_PIN_3
-#define LED7SEG_3_GPIO_Port GPIOB
-#define LED7SEG_4_Pin GPIO_PIN_4
-#define LED7SEG_4_GPIO_Port GPIOB
-#define LED7SEG_5_Pin GPIO_PIN_5
-#define LED7SEG_5_GPIO_Port GPIOB
-#define LED7SEG_6_Pin GPIO_PIN_6
-#define LED7SEG_6_GPIO_Port GPIOB
-#define BUTTON_0_Pin GPIO_PIN_8
-#define BUTTON_0_GPIO_Port GPIOB
-#define BUTTON_1_Pin GPIO_PIN_9
-#define BUTTON_1_GPIO_Port GPIOB
-
+#define SELECT_Pin GPIO_PIN_11
+#define SELECT_GPIO_Port GPIOA
+#define MODIFY_Pin GPIO_PIN_12
+#define MODIFY_GPIO_Port GPIOA
+#define SET_Pin GPIO_PIN_13
+#define SET_GPIO_Port GPIOA
+#define SEG3_Pin GPIO_PIN_3
+#define SEG3_GPIO_Port GPIOB
+#define SEG4_Pin GPIO_PIN_4
+#define SEG4_GPIO_Port GPIOB
+#define SEG5_Pin GPIO_PIN_5
+#define SEG5_GPIO_Port GPIOB
+#define SEG6_Pin GPIO_PIN_6
+#define SEG6_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
@@ -107,3 +107,5 @@ void Error_Handler(void);
 #endif
 
 #endif /* __MAIN_H */
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
