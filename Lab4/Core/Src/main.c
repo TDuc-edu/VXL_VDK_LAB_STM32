@@ -29,6 +29,7 @@
 #include "fsm_display.h"
 #include "fsm_automatic.h"
 #include "fsm_manual.h"
+#include "scheduler.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,13 +98,16 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
-
+SCH_Add_Task(fsm_display, 0, 1);
+SCH_Add_Task(fsm_manual, 5, 1);
+SCH_Add_Task(fsm_automatic, 10, 1);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	fsm_display();
-	fsm_manual();
+//	fsm_display();
+//	fsm_manual();
+	  SCH_Dispatch_Tasks();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
