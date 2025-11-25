@@ -36,4 +36,7 @@ extern int time_green;
 //Check index (0 <= Index < max)
 int checkIndex(int index, int max);
 
+/* SCHEDULER -----*/
+#define TICK 10  // Scheduler tick = 10ms (same as TIME_CYCLE)
+
 #endif /* INC_GLOBAL_H_ */
