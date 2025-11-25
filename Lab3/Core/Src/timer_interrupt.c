@@ -1,8 +1,8 @@
 /*
  * timer_interrupt.c
  *
- *  Created on: Nov 8, 2022
- *      Author: lephu
+ *  Created on: Nov 8, 2025
+ *      Author: TD
  */
 
 #include "timer_interrupt.h"

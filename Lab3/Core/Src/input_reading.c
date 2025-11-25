@@ -1,8 +1,8 @@
 /*
  * input_reading.c
  *
- *  Created on: Nov 9, 2022
- *      Author: lephu
+ *  Created on: Nov 9, 2025
+ *      Author: TD
  */
 
 #include "input_reading.h"

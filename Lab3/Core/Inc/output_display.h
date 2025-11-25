@@ -1,8 +1,8 @@
 /*
  * output_display.h
  *
- *  Created on: Nov 8, 2022
- *      Author: lephu
+ *  Created on: Nov 8, 2025
+ *      Author: TD
  */
 
 #ifndef INC_OUTPUT_DISPLAY_H_
