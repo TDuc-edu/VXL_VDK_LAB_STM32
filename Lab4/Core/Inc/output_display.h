@@ -32,4 +32,6 @@ void updateBuffer(void);
 //display 7 SEGMENT LED
 void display7SEG(int num);
 
+void toggle_led_blink(void);
+
 #endif /* INC_OUTPUT_DISPLAY_H_ */

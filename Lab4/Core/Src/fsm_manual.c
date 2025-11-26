@@ -36,8 +36,8 @@ void inc_time(void) {
 void fsm_manual(void) {
   switch(status_manual) {
   case MODE1:
-    fsm_auto_road1();
-    fsm_auto_road2();
+//    fsm_auto_road1();
+//    fsm_auto_road2();
     if(isButtonPressed(SELECT_BUTTON) == 1) {
       status_manual = MODE2;
       time_road1 = MODE2;

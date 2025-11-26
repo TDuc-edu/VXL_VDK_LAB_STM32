@@ -82,3 +82,8 @@ void display7SEG(int num) {
     HAL_GPIO_WritePin(GPIOB, SEG7[num], RESET);
   }
 }
+
+
+void toggle_led_blink(void) {
+    HAL_GPIO_TogglePin(LED_BLINK_GPIO_Port, LED_BLINK_Pin);
+}

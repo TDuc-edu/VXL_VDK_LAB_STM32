@@ -78,6 +78,8 @@ void Error_Handler(void);
 #define SEG1_GPIO_Port GPIOB
 #define SEG2_Pin GPIO_PIN_2
 #define SEG2_GPIO_Port GPIOB
+#define LED_BLINK_Pin GPIO_PIN_15
+#define LED_BLINK_GPIO_Port GPIOB
 #define EN1_Pin GPIO_PIN_8
 #define EN1_GPIO_Port GPIOA
 #define EN2_Pin GPIO_PIN_9
