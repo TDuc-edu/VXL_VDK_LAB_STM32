@@ -3,6 +3,11 @@
  *
  *  Created on: Nov 30, 2025
  *      Author: TD
+ *
+ *
+ *   Nhận và lưu trữ dữ liệu UART
+ *   cirular bufer chống tràn
+ *   flag báo hiệu có dữ liệu mới
  */
 
 #ifndef INC_UART_BUFFER_H_
@@ -23,6 +28,8 @@ void uart_init_buffer(void);
 void uart_receive_char(uint8_t ch);
 uint8_t uart_get_flag(void);
 void uart_clear_flag(void);
+uint8_t* uart_get_buffer(void);
 uint8_t uart_get_index(void);
+
 
 #endif /* INC_UART_BUFFER_H_ */
